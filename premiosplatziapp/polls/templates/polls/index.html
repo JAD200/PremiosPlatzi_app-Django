@@ -1,3 +1,8 @@
+<div id="index">
+    <a href="{% url 'polls:index' %}" referrerpolicy="origin">Ir a inicio </a>
+</div>
+<div id="content">
+    {% block content %}
 {% if latest_question_list %}
     <ul>
         {% for question in latest_question_list %}
@@ -7,3 +12,5 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{% endblock content %}
+</div>
