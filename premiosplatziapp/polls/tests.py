@@ -1,5 +1,4 @@
 import datetime
-from urllib import response
 
 from django.test import TestCase
 from django.urls import reverse
@@ -36,8 +35,20 @@ class QuestionModelTests(TestCase):
         self.question.pub_date = time
         self.assertIs(self.question.was_published_recently(), False)
 
-
 # Views tests
+
+
+def create_question(question_text, days):
+    """create_question Create a question with the given "question text", and published the given 
+    number of days offset to now (negative for past questions, positive for questions to be published)
+
+    Args:
+        question_text (str): text of the question
+        days (int): number of the days the question was published (in negative -) or is to be published (in positive +)
+    """
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Question.objects.create(question_text=question_text, pub_date=time)
+
 
 class QuestionIndexViewTests(TestCase):
 
@@ -48,17 +59,33 @@ class QuestionIndexViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No polls are available")
         self.assertQuerysetEqual(response.context["latest_question_list"], [])
+# * Challenge
+    # def test_question_with_future_pub_date(self):
+    #     """test_questions_with_future_pub_date Ensures there is no question with a greater pub_date than the current time
+    #     """
+    #     Question(
+    #         question_text="Present Question", pub_date=timezone.now()).save()
 
-    def test_questions_with_future_pub_date(self):
-        """test_questions_with_future_pub_date Ensures there is no question with a greater pub_date than the current time
+    #     Question(
+    #         question_text="Future Question", pub_date=timezone.now() + datetime.timedelta(days=30)).save()
+
+    #     response = self.client.get(reverse("polls:index"))
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertContains(response, "Present Question")
+    #     self.assertNotContains(response, "Future Question")
+
+    def test_future_question(self):
+        """test_future_question Questions with a pub_date in the future are not displayed in the index page
         """
-        Question(
-            question_text="Present Question", pub_date=timezone.now()).save()
-
-        Question(
-            question_text="Future Question",pub_date=timezone.now() + datetime.timedelta(days=30)).save()
-
+        create_question("Future question", days=30)
         response = self.client.get(reverse("polls:index"))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Present Question")
-        self.assertNotContains(response, "Future Question")
+        self.assertContains(response, "No polls are available")
+        self.assertQuerysetEqual(response.context["latest_question_list"], [])
+
+    def test_past_question(self):
+        """test_past_question Questions with a pub_date in the past are displayed in the index page
+        """
+        question = create_question("Past question", days=-10)
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerysetEqual(
+            response.context["latest_question_list"], [question])
