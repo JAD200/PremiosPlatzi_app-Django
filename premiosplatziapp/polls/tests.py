@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from polls.models import Question
+from polls.models import Question, Choice
 
 
 # Models tests
@@ -38,8 +38,8 @@ class QuestionModelTests(TestCase):
 # Views tests
 
 
-def create_question(question_text, days):
-    """create_question Create a question with the given "question text", and published the given 
+def create_question(question_text: str, days: int):
+    """create_question create_question Create a question with the given "question text", and published the given 
     number of days offset to now (negative for past questions, positive for questions to be published)
 
     Args:
@@ -48,6 +48,17 @@ def create_question(question_text, days):
     """
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(question_text=question_text, pub_date=time)
+
+
+def create_choice(choice_text: str, question, votes: int = 0):
+    """create_choice _summary_
+
+    Args:
+        choice_text (str): text of the choice
+        question (_type_): choice's question
+        votes (int, optional): Votes of the choice. Defaults to 0.
+    """
+    return Choice.objects.create(choice_text=choice_text, question=question, votes=votes)
 
 
 class QuestionIndexViewTests(TestCase):
@@ -145,3 +156,30 @@ class QuestionDetailViewTests(TestCase):
         url = reverse("polls:detail", args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class QuestionResultsViewTests(TestCase):
+    def test_question_not_exists(self):
+        """test_question_not_exists If question id does not exists, get 404 error
+        """
+        response = self.client.get(reverse("polls:results", kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_display_question_choices_and_votes(self):
+        """test_display_question_choices_and_votes Page may display votes 
+        for every choice of a question
+        """
+        question = create_question("Question", -1)
+        choice1 = create_choice("Choice 1", question=question, votes=1)
+        choice2 = create_choice("Choice 2", question=question, votes=2)
+        choice3 = create_choice("Choice 3", question=question)
+        choice4 = create_choice("Choice 4", question=question)
+
+        response = self.client.get(
+            reverse("polls:results", kwargs={'pk': question.pk}))
+
+        self.assertContains(response, question.question_text)
+        self.assertContains(response, choice1.choice_text + ' -- ' + '1 vote')
+        self.assertContains(response, choice2.choice_text + ' -- ' + '2 votes')
+        self.assertContains(response, choice3.choice_text + ' -- ' + '0 votes')
+        self.assertContains(response, choice4.choice_text + ' -- ' + '0 votes')
