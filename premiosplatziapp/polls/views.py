@@ -32,16 +32,20 @@ from .models import Choice, Question
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
-    
+
     def get_queryset(self):
-        """Returns the last published question"""
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+        """get_queryset Shows the questions with at least one choice and with a pub_date smaller than the current one
+
+        Returns:
+            list: List of the questions that satisfy the parameters
+        """
+        return Question.objects.filter(pub_date__lte=timezone.now()).exclude(choice__isnull=True).order_by("-pub_date")[:5]# choice__isnull is a SQL expression
 
 
 class DetailView(generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
-    
+
     def get_queryset(self):
         """get_queryset Excludes any question that are not published yet
         """
