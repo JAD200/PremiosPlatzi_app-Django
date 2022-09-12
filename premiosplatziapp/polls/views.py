@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -39,7 +40,9 @@ class IndexView(generic.ListView):
         Returns:
             list: List of the questions that satisfy the parameters
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).exclude(choice__isnull=True).order_by("-pub_date")[:5]# choice__isnull is a SQL expression
+        question = Question.objects.filter(pub_date__lte=timezone.now())
+        question = question.alias(entries=Count("choice")).filter(entries__gte=2)
+        return question.order_by("-pub_date")[:5]
 
 
 class DetailView(generic.DetailView):
@@ -55,6 +58,9 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
+    def get_queryset(self):
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
 
 def vote(request, question_id):
