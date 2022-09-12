@@ -1,7 +1,45 @@
-li a {
-    color: green;
+/* Color pallete */
+/* https://adobe.ly/3eF1waS */
+
+li {
+    border-radius: 6px;
+    display: block;
+    list-style: none;
+    margin: 24px;
 }
 
+li a{
+    background-color: #5d8ba7;
+    border-radius: 14px;
+    color: #112026;
+    padding: 12px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #D9A25F;
+    border-radius: 10px;
+}
+
+li a:active {
+    background-color: #8C1F1F;
+    color: #112026;
+}
+
+#index {
+    border-radius: 6px;
+    display: block;
+    list-style: none;
+    margin: 24px;
+}
+
+#index a{
+    background-color: #8C1F1F;
+    border-radius: 14px;
+    color: #fff;
+    padding: 12px;
+    text-decoration: none;
+}
 
 body {
     background: white url("images/background.gif") no-repeat;
