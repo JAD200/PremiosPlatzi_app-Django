@@ -16,17 +16,18 @@ class AtLeastOneRequiredInlineFormSet(BaseInlineFormSet):
         if any(self.errors):
             return
         if not any(cleaned_data and not cleaned_data.get('DELETE', False) for cleaned_data in self.cleaned_data):
-            raise forms.ValidationError('At least one choice required.')
+            raise forms.ValidationError('At least two choices required.')
 
 
-class ChoicesInline(admin.TabularInline):
+class ChoicesInline(admin.StackedInline):
     model = Choice
     formset = AtLeastOneRequiredInlineFormSet
-    extra = 1
+    extra = 2
     exclude = ['votes']
 
 
 class QuestionAdmin(admin.ModelAdmin):
+    fields = ["pub_date", "question_text"]
     inlines = (ChoicesInline,)
 
     def save_formset(self, request, form, formset, change):
@@ -38,4 +39,3 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Question, QuestionAdmin)
-# admin.site.register(Question)
