@@ -1,46 +1,87 @@
 /* Color pallete */
 /* https://adobe.ly/3eF1waS */
 
-li {
-    border-radius: 6px;
-    display: block;
-    list-style: none;
-    margin: 24px;
+body {
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    background-color: hsl(204, 100%, 5%);
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
 }
 
-li a{
-    background-color: #5d8ba7;
-    border-radius: 14px;
-    color: #112026;
-    padding: 12px;
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 100px;
+    padding: 50px;
+
+    color: #71632d;
+    font-size: 72px;
+    height: 60px;
+}
+
+ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+header, ul {
+    background: linear-gradient(
+        to right,
+        hsl(98, 100%, 62%),
+        hsl(204, 100%, 59%)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 500px;
+
+    border: 1px solid white;
+    margin-bottom: 20px;
+    padding: 50px;
+
+    font-size: 28px;
+}
+
+a {
+    color: white;
     text-decoration: none;
 }
 
-li a:hover {
-    background-color: #D9A25F;
-    border-radius: 10px;
-}
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 
-li a:active {
-    background-color: #8C1F1F;
-    color: #112026;
+    padding: 50px 0px;
+    width: 100vw;
 }
 
 #index {
-    border-radius: 6px;
-    display: block;
-    list-style: none;
-    margin: 24px;
-}
+    background: linear-gradient(
+        to right,
+        hsl(204, 100%, 59%),
+        hsl(98, 100%, 62%)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 30px;
+    padding: 15px 20px;
 
-#index a{
-    background-color: #8C1F1F;
-    border-radius: 14px;
-    color: #fff;
-    padding: 12px;
-    text-decoration: none;
 }
-
-/* body {
-    background: white url("images/background.gif") no-repeat;
-} */
