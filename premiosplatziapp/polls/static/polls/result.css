@@ -1,0 +1,23 @@
+header {
+    padding-top: 200px;
+    font-size: 3vh;   
+}
+
+footer a {
+    font-size: 23px;
+}
+
+@media only screen and (max-width: 550px) {
+    header {
+        padding-top: 270px;
+        font-size: 5.1vw;
+    }
+    li {
+        width: 54.5vw;
+        font-size: 4.9vw;
+    }
+
+    footer a {
+        font-size: 3.8vw;
+    }
+}
