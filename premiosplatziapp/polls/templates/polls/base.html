@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{% static 'polls/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    {% endblock stylesheet %}
+    <title>{% block title %} Premios Platzi App {% endblock title %}</title>
+</head>
+
+<body>
+    {% comment "Index link" %}Link to the index view{% endcomment %}
+    <div id="index">
+        {% block index %}
+        <a href="{% url 'polls:index' %}" referrerpolicy="origin">Ir al inicio </a>
+        {% endblock %}
+    </div>
+    {% comment "Section content" %}section with the main content{% endcomment %}
+    <section id="content">
+        {% block content %}{% endblock %}
+    </section>
+    <footer>
+        <a href="https://platzi.com">Platzi</a>
+        <a href="#">Contacto</a>
+        <a href="#">¿Quires ser profe?</a>
+        <a href="#">Politica de Pirvacidad</a>
+        <a href="#">Terminos y condiciones</a>
+    </footer>
+</body>
+</html>

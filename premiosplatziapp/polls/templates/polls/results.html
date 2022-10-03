@@ -1,16 +1,15 @@
+{% extends 'polls/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-    <link rel="stylesheet" href="{% static 'polls/result.css' %}">
-    <title>{{ question.question_text }}</title>
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+        <link rel="stylesheet" href="{% static 'polls/result.css' %}">
+    {% endblock stylesheet %}
+    <title>{% block title %} {{ question.question_text }} {% endblock title %}</title>
 </head>
 <body>
+    {% block content %}
     <header>
         <h1>{{ question.question_text }}</h1>
     </header>
@@ -21,8 +20,8 @@
         </li>
         {% endfor %}
     </ul>
-    <footer>
+    <section id="vote_again">
         <a href="{% url 'polls:detail' question.id %}">¿Te gustaria votar de nuevo?</a>
-    </footer>
+    </section>
+    {% endblock content %}
 </body>
-</html>

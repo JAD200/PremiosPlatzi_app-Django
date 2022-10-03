@@ -1,16 +1,16 @@
+{% extends 'polls/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-    <link rel="stylesheet" href="{% static 'polls/detail.css' %}">
-    <title>{{ question.question_text }}</title>
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+        <link rel="stylesheet" href="{% static 'polls/detail.css' %}">
+    {% endblock stylesheet %}
+    <title>{% block title %} {{ question.question_text }} {% endblock title %}</title>
 </head>
 <body>
+    {{ block.super }}
+    {% block content %}
     <form action="{% url 'polls:vote' question.id %}" method="post">
         {% csrf_token %}
         <fieldset>
@@ -20,10 +20,10 @@
             {% endif %}
             {% for choice in question.choice_set.all %}
                 <input 
-                    id="choice{{ forloop.counter }}"
-                    name="choice"
-                    type="radio"
-                    value="{{ choice.id }}"
+                id="choice{{ forloop.counter }}"
+                name="choice"
+                type="radio"
+                value="{{ choice.id }}"
                 >
                 <label for="choice{{ forloop.counter }}">
                     {{ choice.choice_text }}
@@ -33,5 +33,5 @@
         </fieldset>
         <input name="vote" type="submit" value="votar">
     </form>
+    {% endblock content %}
 </body>
-</html>
