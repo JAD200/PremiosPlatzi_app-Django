@@ -2,10 +2,9 @@
 /* https://adobe.ly/3eF1waS */
 
 body {
-    display:  flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: [Index] 75px [Index-end] auto [Footer] auto [Footer-end];
+    grid-column-gap: 10px;
 
     background-color: hsl(204, 100%, 5%);
     font-family: Arial, Helvetica, sans-serif;
@@ -28,8 +27,8 @@ header {
 ul {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
 }
 
 header, ul {
@@ -68,7 +67,7 @@ footer {
     align-items: center;
     justify-content: space-evenly;
 
-    padding: 50px 0px;
+    padding: 50px 2px;
     width: 100vw;
 }
 
@@ -79,9 +78,28 @@ footer {
         hsl(98, 100%, 62%)
     );
     -webkit-background-clip: text;
+    align-self: flex-start;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 30px;
-    padding: 15px 20px;
+    padding: 25px 20px;
+}
 
+@media only screen and (max-width: 550px) {
+    header {
+        font-size: 50px
+    }
+    li {
+        font-size: 4.9vw;
+        width: 54.5vw;
+    }
+
+    footer {
+        flex-direction: column;
+        font-size: 3.8vw;
+    }
+
+    footer a {
+        padding-top: 15px;
+    }
 }
