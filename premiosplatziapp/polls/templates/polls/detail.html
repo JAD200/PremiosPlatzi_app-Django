@@ -9,7 +9,6 @@
     <title>{% block title %} {{ question.question_text }} {% endblock title %}</title>
 </head>
 <body>
-    {{ block.super }}
     {% block content %}
     <form action="{% url 'polls:vote' question.id %}" method="post">
         {% csrf_token %}
