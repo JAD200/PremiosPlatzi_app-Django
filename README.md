@@ -16,7 +16,7 @@
     <img src="https://i.imgur.com/fDkhooA.png" alt="Python logo" width="300" >
   </a>
 
-<h3 align="center">Tittle</h3>
+<h3 align="center">Vote app with Django</h3>
 
   <p align="center">
     App to create, delete and vote questions with choices for the Platzi awards
@@ -55,8 +55,7 @@
   ```sh
   sudo apt install python3
   ```
-
-  * python3
+* Django
   ```sh
   pip install django
   ```
@@ -64,7 +63,20 @@
 <!-- ROADMAP -->
 ## Roadmap
 
-- Basics
+- Application tests
+	- Views tests
+	- Models tests
+- Management of static fyles
+	- CSS
+	- Images
+- Django admin customisation
+	- Edit the view of the admin
+	- Addition of fileds to questio list
+	- Reorganisation of the question form
+-  Frontend overhauling
+	- CSS
+	- HTML
+
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
